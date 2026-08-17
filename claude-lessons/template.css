@@ -1,0 +1,276 @@
+/* ============================================================
+   知识树统一模板 — 原木风 + 书香气质
+   版本: 1.0.0
+   ============================================================ */
+
+:root {
+  /* 原木色系 */
+  --wood-dark: #4a3728;
+  --wood-medium: #6b4f3a;
+  --wood-light: #8b7355;
+  --wood-pale: #a89070;
+
+  /* 书香色系 */
+  --paper-cream: #faf6f0;
+  --paper-warm: #f5efe3;
+  --paper-aged: #ebe0cc;
+  --ink-dark: #2c1810;
+  --ink-medium: #5c4033;
+  --ink-light: #7a6555;
+
+  /* 强调色 */
+  --leaf-green: #5a7a4a;
+  --leaf-light: #7a9a6a;
+  --berry-red: #a05050;
+  --gold-accent: #c4a265;
+
+  /* 节点颜色 */
+  --node-root: #4a3728;
+  --node-branch: #6b4f3a;
+  --node-leaf: #5a7a4a;
+  --node-highlight: #c4a265;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', 'Noto Serif SC', 'STSong', 'SimSun', serif;
+  background-color: var(--paper-cream);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(139, 115, 85, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(139, 115, 85, 0.03) 0%, transparent 50%);
+  color: var(--ink-dark);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ============================================================
+   工具栏
+   ============================================================ */
+.toolbar {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  gap: 8px;
+  background: var(--paper-warm);
+  border: 1px solid var(--wood-pale);
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 8px rgba(74, 55, 40, 0.1);
+}
+
+.toolbar button {
+  background: transparent;
+  border: 1px solid var(--wood-light);
+  color: var(--ink-medium);
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.toolbar button:hover {
+  background: var(--wood-light);
+  color: var(--paper-cream);
+}
+
+/* ============================================================
+   画布容器
+   ============================================================ */
+#tree-canvas {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+#tree-canvas:active {
+  cursor: grabbing;
+}
+
+/* ============================================================
+   树节点
+   ============================================================ */
+.tree-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.3s ease,
+              filter 0.3s ease;
+}
+
+.tree-node:hover {
+  z-index: 100;
+  filter: brightness(1.1) drop-shadow(0 4px 12px rgba(74, 55, 40, 0.25));
+}
+
+.tree-node.root {
+  /* 根节点样式 */
+}
+
+.tree-node .node-content {
+  padding: 10px 18px;
+  border-radius: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+/* 根节点 */
+.tree-node.level-0 .node-content {
+  background: var(--node-root);
+  color: var(--paper-cream);
+  font-size: 18px;
+  padding: 14px 28px;
+  border-radius: 28px;
+  box-shadow: 0 4px 16px rgba(74, 55, 40, 0.3);
+}
+
+.tree-node.level-0:hover .node-content {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(74, 55, 40, 0.4);
+}
+
+/* 分支节点 */
+.tree-node.level-1 .node-content {
+  background: var(--node-branch);
+  color: var(--paper-cream);
+  box-shadow: 0 3px 10px rgba(107, 79, 58, 0.25);
+}
+
+.tree-node.level-1:hover .node-content {
+  transform: scale(1.06);
+  box-shadow: 0 5px 18px rgba(107, 79, 58, 0.35);
+}
+
+.tree-node.level-2 .node-content {
+  background: var(--wood-light);
+  color: var(--paper-cream);
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(139, 115, 85, 0.2);
+}
+
+.tree-node.level-2:hover .node-content {
+  transform: scale(1.06);
+}
+
+/* 叶节点 — 可点击跳转 MD */
+.tree-node.level-3 .node-content,
+.tree-node.level-4 .node-content {
+  background: var(--paper-warm);
+  color: var(--ink-dark);
+  border-color: var(--wood-pale);
+  font-weight: 500;
+  font-size: 13px;
+  box-shadow: 0 1px 4px rgba(139, 115, 85, 0.1);
+}
+
+.tree-node.level-3 .node-content:hover,
+.tree-node.level-4 .node-content:hover {
+  background: var(--leaf-light);
+  color: var(--paper-cream);
+  border-color: var(--leaf-green);
+  transform: scale(1.08);
+  box-shadow: 0 4px 14px rgba(90, 122, 74, 0.3);
+}
+
+/* 叶节点的知识图标 */
+.tree-node.is-leaf .node-content::after {
+  content: ' \1F4DA'; /* 📚 */
+  font-size: 12px;
+  margin-left: 2px;
+}
+
+/* ============================================================
+   连接线 (SVG)
+   ============================================================ */
+.tree-link {
+  fill: none;
+  stroke: var(--wood-pale);
+  stroke-width: 2px;
+  opacity: 0.5;
+  transition: opacity 0.3s ease, stroke 0.3s ease;
+}
+
+.tree-link.highlighted {
+  stroke: var(--gold-accent);
+  stroke-width: 3px;
+  opacity: 1;
+}
+
+/* ============================================================
+   缩放指示器
+   ============================================================ */
+.zoom-indicator {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  font-size: 13px;
+  color: var(--ink-light);
+  background: var(--paper-warm);
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--wood-pale);
+  z-index: 1000;
+}
+
+/* ============================================================
+   标题
+   ============================================================ */
+.tree-title {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--wood-dark);
+  letter-spacing: 2px;
+  z-index: 1000;
+  background: var(--paper-warm);
+  padding: 8px 24px;
+  border-radius: 20px;
+  border: 1px solid var(--wood-pale);
+  box-shadow: 0 2px 8px rgba(74, 55, 40, 0.1);
+}
+
+/* ============================================================
+   动画
+   ============================================================ */
+@keyframes nodeAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.tree-node {
+  animation: nodeAppear 0.5s ease forwards;
+}
+
+/* 脉冲动画（根节点） */
+@keyframes rootPulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(74, 55, 40, 0.3); }
+  50% { box-shadow: 0 4px 24px rgba(196, 162, 101, 0.5); }
+}
+
+.tree-node.level-0 .node-content {
+  animation: rootPulse 4s ease-in-out infinite;
+}

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>知识点 — DeepSeek Harness 技能树</title>
+  <style>
+    :root {
+      --wood-dark: #4a3728;
+      --wood-medium: #6b4f3a;
+      --wood-light: #8b7355;
+      --wood-pale: #a89070;
+      --paper-cream: #faf6f0;
+      --paper-warm: #f5efe3;
+      --paper-aged: #ebe0cc;
+      --ink-dark: #2c1810;
+      --ink-medium: #5c4033;
+      --ink-light: #7a6555;
+      --leaf-green: #5a7a4a;
+      --leaf-light: #7a9a6a;
+      --gold-accent: #c4a265;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', 'Noto Serif SC', 'STSong', 'SimSun', serif;
+      background: var(--paper-cream);
+      color: var(--ink-dark);
+      line-height: 1.8;
+      padding: 40px 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--leaf-green);
+      text-decoration: none;
+      font-size: 15px;
+      padding: 6px 16px;
+      border: 1px solid var(--wood-pale);
+      border-radius: 16px;
+      background: var(--paper-warm);
+      transition: all 0.2s;
+    }
+
+    .back-link:hover {
+      background: var(--leaf-light);
+      color: var(--paper-cream);
+      border-color: var(--leaf-green);
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--paper-warm);
+      padding: 40px 48px;
+      border-radius: 12px;
+      border: 1px solid var(--paper-aged);
+      box-shadow: 0 4px 20px rgba(74, 55, 40, 0.08);
+    }
+
+    .content h1 {
+      font-size: 28px;
+      color: var(--wood-dark);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--gold-accent);
+    }
+
+    .content h2 {
+      font-size: 20px;
+      color: var(--wood-medium);
+      margin-top: 32px;
+      margin-bottom: 12px;
+      padding-left: 12px;
+      border-left: 4px solid var(--leaf-green);
+    }
+
+    .content h3 {
+      font-size: 17px;
+      color: var(--ink-medium);
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    .content p {
+      margin-bottom: 14px;
+      font-size: 16px;
+      text-indent: 2em;
+    }
+
+    .content ul, .content ol {
+      margin: 12px 0 12px 2em;
+    }
+
+    .content li {
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .content code {
+      background: var(--paper-aged);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      color: var(--berry-red, #a05050);
+    }
+
+    .content pre {
+      background: var(--ink-dark);
+      color: var(--paper-cream);
+      padding: 16px 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .content pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    .content blockquote {
+      border-left: 4px solid var(--gold-accent);
+      background: rgba(196, 162, 101, 0.08);
+      padding: 12px 20px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: var(--ink-medium);
+    }
+
+    .content blockquote p {
+      text-indent: 0;
+      margin-bottom: 0;
+    }
+
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    .content th {
+      background: var(--wood-dark);
+      color: var(--paper-cream);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .content td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--paper-aged);
+    }
+
+    .content tr:nth-child(even) td {
+      background: rgba(139, 115, 85, 0.04);
+    }
+
+    .content a {
+      color: var(--leaf-green);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .content a:hover {
+      color: var(--wood-dark);
+    }
+
+    .content hr {
+      border: none;
+      border-top: 1px dashed var(--wood-pale);
+      margin: 24px 0;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px;
+      font-size: 18px;
+      color: var(--ink-light);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../../index.html" class="back-link">← 返回技能树</a>
+
+  <div class="content" id="content">
+    <div class="loading">加载中...</div>
+  </div>
+
+  <script>
+    // 极简 Markdown → HTML 渲染器
+    function renderMarkdown(md) {
+      let html = md;
+
+      // 代码块 (优先处理，避免内部被转义)
+      const codeBlocks = [];
+      html = html.replace(/```(\w*)\n([\s\S]*?)```/g, function(_, lang, code) {
+        const idx = codeBlocks.length;
+        codeBlocks.push('<pre><code>' + escapeHtml(code.trim()) + '</code></pre>');
+        return '%%CODEBLOCK_' + idx + '%%';
+      });
+
+      // 标题
+      html = html.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+      html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+      html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+      html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+
+      // 分隔线
+      html = html.replace(/^---$/gm, '<hr>');
+
+      // 引用块
+      html = html.replace(/^> (.+)$/gm, '<blockquote><p>$1</p></blockquote>');
+
+      // 表格
+      html = html.replace(/((?:^\|.+\|\n?)+)/gm, function(table) {
+        const rows = table.trim().split('\n').filter(function(r) { return !r.match(/^\|[\s-]+\|$/); });
+        if (rows.length === 0) return table;
+        let result = '<table>';
+        rows.forEach(function(row, i) {
+          const cells = row.split('|').filter(function(c) { return c.trim(); });
+          const tag = i === 0 ? 'th' : 'td';
+          result += '<tr>' + cells.map(function(c) { return '<' + tag + '>' + c.trim() + '</' + tag + '>'; }).join('') + '</tr>';
+        });
+        result += '</table>';
+        return result;
+      });
+
+      // 列表
+      html = html.replace(/((?:^- .+\n?)+)/gm, function(list) {
+        const items = list.trim().split('\n');
+        return '<ul>' + items.map(function(i) { return '<li>' + i.replace(/^- /, '') + '</li>'; }).join('') + '</ul>';
+      });
+      html = html.replace(/((?:^\d+\. .+\n?)+)/gm, function(list) {
+        const items = list.trim().split('\n');
+        return '<ol>' + items.map(function(i) { return '<li>' + i.replace(/^\d+\. /, '') + '</li>'; }).join('') + '</ol>';
+      });
+
+      // 行内代码
+      html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+      // 链接
+      html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+
+      // 加粗
+      html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+      // 段落（空行分隔）
+      html = html.split(/\n\n+/).map(function(block) {
+        block = block.trim();
+        if (!block) return '';
+        if (block.startsWith('<h') || block.startsWith('<pre') || block.startsWith('<blockquote') || block.startsWith('<ul') || block.startsWith('<ol') || block.startsWith('<table') || block.startsWith('<hr') || block.startsWith('%%CODEBLOCK')) {
+          return block;
+        }
+        return '<p>' + block.replace(/\n/g, '<br>') + '</p>';
+      }).join('\n');
+
+      // 还原代码块
+      html = html.replace(/%%CODEBLOCK_(\d+)%%/g, function(_, idx) {
+        return codeBlocks[parseInt(idx)];
+      });
+
+      return html;
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // 从 URL 参数获取文件名
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get('file');
+
+    if (file) {
+      fetch(file)
+        .then(function(r) { return r.text(); })
+        .then(function(md) {
+          document.getElementById('content').innerHTML = renderMarkdown(md);
+        })
+        .catch(function() {
+          document.getElementById('content').innerHTML = '<div class="loading">加载失败。请确保通过本地服务器访问（如 VS Code Live Server）。</div>';
+        });
+    } else {
+      document.getElementById('content').innerHTML = '<div class="loading">未指定文件。</div>';
+    }
+  </script>
+</body>
+</html>

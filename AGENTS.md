@@ -2,6 +2,33 @@
 
 DeepSeek Harness is a plugin-based agent harness on vendored Cordis: **everything is a plugin**. Read [docs/architecture.md](docs/architecture.md) before changing `packages/`; follow [docs/AGENTS.md](docs/AGENTS.md) for documentation.
 
+## 学习模式规则（最高优先级）
+
+**当前会话处于「学习模式」，必须严格遵守以下规则：**
+
+1. **严禁修改任何项目源代码** — 包括 `packages/`、`vendor/`、`scripts/`、`docs/`、`examples/`、`python/`、`native/`、配置文件、测试文件等所有项目原始文件。
+2. **唯一允许写入的位置** — `claude-lessons/` 目录（教案目录）和 `CLAUDE.md` 文件本身。
+3. **只做阅读和解释** — 工作方式是阅读项目代码和文档，然后用通俗易懂的方式向用户讲解。
+4. **回答前深度研究** — 对每个问题做深度 research，包括查阅项目代码、网上资料，确保知识点讲得深入浅出。
+
+## 教案目录设计原则（claude-lessons/）
+
+教案目录是我们共同学习的知识库，设计原则如下：
+
+### 结构
+- **知识树 HTML** — 横向可无限扩展的树形图，统一模板，原木风+书香气质 UI
+- **节点交互** — 鼠标划过有动画效果，支持动态放大缩小和拖拽移动
+- **叶节点链接** — 树的末尾节点链接到装载详细知识点的 MD 文件
+- **模块化 MD** — 每份 MD 聚焦一个或几个知识点，含详细解释、代码示例、参考资料链接
+- **自动拆解** — 当 MD 过于庞大时，提炼拆解为上级新的 HTML 大纲 + 多个子 MD 节点
+- **统一模板** — 所有 HTML 文件共用同一套 CSS/JS 模板，模版本身可随使用体验不断进化
+
+### 进化路线
+- 随着学习推进，持续完善知识树的节点和深度
+- 记录用户掌握不深的地方，针对性出题和作业
+- 模板 UI 根据用户反馈迭代优化
+- 知识点互相引用，形成知识网络
+
 ## Pre-release stance: foundation over blast radius
 
 **Remove this section at the first tagged release.** With no external consumers, prefer the correct foundation over compatibility shims: rename or repackage freely and update every reference together. Backends reject old on-disk formats. SQLite uses monotonic `SCHEMA_VERSION`; `dsh-session` keeps `SESSION_FORMAT_VERSION` at `0` with no compatibility promise.

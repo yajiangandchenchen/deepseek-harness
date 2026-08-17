@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepSeek Harness 技能树</title>
+  <link rel="stylesheet" href="template.css">
+</head>
+<body>
+
+  <!-- 标题 -->
+  <div class="tree-title">DeepSeek Harness 技能树</div>
+
+  <!-- 工具栏 -->
+  <div class="toolbar">
+    <button id="zoom-in">＋ 放大</button>
+    <button id="zoom-out">－ 缩小</button>
+    <button id="zoom-reset">⊙ 重置</button>
+  </div>
+
+  <!-- 缩放指示器 -->
+  <div class="zoom-indicator">缩放: <span id="zoom-level">100%</span> | 拖拽移动 | 滚轮缩放 | 点击 📚 叶节点查看知识点</div>
+
+  <!-- 画布 -->
+  <svg id="tree-links" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></svg>
+  <div id="tree-canvas" style="position:relative;width:100%;height:100%;">
+
+    <!-- ==================== 根节点 ==================== -->
+    <div class="tree-node level-0" style="left:50%;top:50%;" data-target="">
+      <div class="node-content">DeepSeek Harness</div>
+    </div>
+
+    <!-- ==================== 第1层: 核心概念 ==================== -->
+    <div class="tree-node level-1" style="left:25%;top:30%;" data-target="">
+      <div class="node-content">Cordis 框架核心</div>
+    </div>
+    <div class="tree-node level-1" style="left:25%;top:70%;" data-target="">
+      <div class="node-content">项目架构</div>
+    </div>
+    <div class="tree-node level-1" style="left:75%;top:30%;" data-target="">
+      <div class="node-content">能力 Seam 模式</div>
+    </div>
+    <div class="tree-node level-1" style="left:75%;top:70%;" data-target="">
+      <div class="node-content">构建与配置系统</div>
+    </div>
+
+    <!-- ==================== 第2层: Cordis 子节点 ==================== -->
+    <div class="tree-node level-2 is-leaf" style="left:10%;top:15%;" data-target="lessons/viewer.html?file=cordis-context.md">
+      <div class="node-content">Context 上下文</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:10%;top:30%;" data-target="lessons/viewer.html?file=cordis-service.md">
+      <div class="node-content">Service 服务基类</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:10%;top:45%;" data-target="lessons/viewer.html?file=cordis-fiber.md">
+      <div class="node-content">Fiber 生命周期</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:10%;top:60%;" data-target="lessons/viewer.html?file=cordis-events.md">
+      <div class="node-content">事件系统</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:10%;top:75%;" data-target="lessons/viewer.html?file=cordis-declaration-merging.md">
+      <div class="node-content">声明合并</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:10%;top:90%;" data-target="lessons/viewer.html?file=cordis-reflect.md">
+      <div class="node-content">Reflect 反射层</div>
+    </div>
+
+    <!-- ==================== 第2层: 项目架构子节点 ==================== -->
+    <div class="tree-node level-2 is-leaf" style="left:28%;top:55%;" data-target="lessons/viewer.html?file=architecture-overview.md">
+      <div class="node-content">架构总览</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:28%;top:75%;" data-target="lessons/viewer.html?file=agent-loop.md">
+      <div class="node-content">Agent Loop 循环</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:28%;top:90%;" data-target="lessons/viewer.html?file=session-event-sourcing.md">
+      <div class="node-content">会话事件溯源</div>
+    </div>
+
+    <!-- ==================== 第2层: 能力 Seam 子节点 ==================== -->
+    <div class="tree-node level-2 is-leaf" style="left:62%;top:15%;" data-target="lessons/viewer.html?file=seam-concept.md">
+      <div class="node-content">Seam 三角色概念</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:62%;top:32%;" data-target="lessons/viewer.html?file=seam-shell.md">
+      <div class="node-content">Shell 能力</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:62%;top:49%;" data-target="lessons/viewer.html?file=seam-llm.md">
+      <div class="node-content">LLM 能力</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:62%;top:66%;" data-target="lessons/viewer.html?file=seam-fs.md">
+      <div class="node-content">文件系统能力</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:62%;top:83%;" data-target="lessons/viewer.html?file=seam-subagent.md">
+      <div class="node-content">Subagent 能力</div>
+    </div>
+
+    <!-- ==================== 第2层: 构建配置子节点 ==================== -->
+    <div class="tree-node level-2 is-leaf" style="left:82%;top:55%;" data-target="lessons/viewer.html?file=tsconfig-layout.md">
+      <div class="node-content">TypeScript 项目布局</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:82%;top:72%;" data-target="lessons/viewer.html?file=build-flow.md">
+      <div class="node-content">构建流程</div>
+    </div>
+    <div class="tree-node level-2 is-leaf" style="left:82%;top:89%;" data-target="lessons/viewer.html?file=profile-bundle-preset.md">
+      <div class="node-content">Profile/Bundle/Preset</div>
+    </div>
+
+  </div>
+
+  <!-- 连接线 (用 JS 动态绘制) -->
+  <script>
+    (function () {
+      const svg = document.getElementById('tree-links');
+      const nodes = document.querySelectorAll('.tree-node');
+
+      function getCenter(el) {
+        const rect = el.getBoundingClientRect();
+        return {
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2
+        };
+      }
+
+      function drawLinks() {
+        svg.innerHTML = '';
+        const root = document.querySelector('.tree-node.level-0');
+        const rootPos = getCenter(root);
+
+        // 根节点到第1层
+        document.querySelectorAll('.tree-node.level-1').forEach(function (node) {
+          const pos = getCenter(node);
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          const midX = (rootPos.x + pos.x) / 2;
+          path.setAttribute('d', `M${rootPos.x},${rootPos.y} C${midX},${rootPos.y} ${midX},${pos.y} ${pos.x},${pos.y}`);
+          path.setAttribute('class', 'tree-link');
+          svg.appendChild(path);
+        });
+
+        // 第1层到第2层（根据位置就近连接）
+        document.querySelectorAll('.tree-node.level-1').forEach(function (branch) {
+          const branchPos = getCenter(branch);
+          document.querySelectorAll('.tree-node.level-2').forEach(function (leaf) {
+            const leafPos = getCenter(leaf);
+            // 只连接水平方向相近的
+            if (Math.abs(leafPos.x - branchPos.x) < window.innerWidth * 0.2) {
+              const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+              path.setAttribute('d', `M${branchPos.x},${branchPos.y} L${leafPos.x},${leafPos.y}`);
+              path.setAttribute('class', 'tree-link');
+              svg.appendChild(path);
+            }
+          });
+        });
+      }
+
+      window.addEventListener('load', drawLinks);
+      window.addEventListener('resize', drawLinks);
+      // 延迟绘制确保布局完成
+      setTimeout(drawLinks, 100);
+    })();
+  </script>
+
+  <script src="template.js"></script>
+</body>
+</html>
